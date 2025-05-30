@@ -1,4 +1,5 @@
-from db.models import MovieSession, Ticket
+from database_app.models import MovieSession
+from django.db.models import QuerySet
 
 
 def create_movie_session(

@@ -1,25 +1,13 @@
 from django.db import transaction
 from django.contrib.auth import get_user_model
-from db.models import Order, Ticket, MovieSession, User as CustomUser # Можна імпортувати напряму, якщо User = get_user_model() викликає конфлікт або для ясності
+from database_app.models import Order, Ticket, MovieSession
 from datetime import datetime
 
-User = get_user_model() # Або CustomUser, якщо імпортували так
+User = get_user_model()
 
 
 @transaction.atomic
 def create_order(tickets: list[dict], username: str, date: str = None) -> Order:
-    """
-    Створює замовлення та пов'язані з ним квитки.
-    Виконується як атомарна транзакція.
-
-    :param tickets: Список словників, кожен з яких має ключі "row", "seat", "movie_session" (ID).
-    :param username: Ім'я користувача, який робить замовлення.
-    :param date: Необов'язкова дата створення замовлення у форматі "РРРР-ММ-ДД ГГ:ХХ" або "РРРР-ММ-ДД ГГ:ХХ:СС".
-    :return: Створений об'єкт Order.
-    :raises ValueError: Якщо користувач не знайдений, кіносеанс не знайдений,
-                       неправильний формат дати або відсутні необхідні ключі в даних квитка.
-    :raises ValidationError: Якщо дані квитка (ряд/місце) невалідні (з методу clean() моделі Ticket).
-    """
     try:
         user_instance = User.objects.get(username=username)
     except User.DoesNotExist:
