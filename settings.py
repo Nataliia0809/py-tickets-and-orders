@@ -15,7 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'db'
+    'database_app.apps.DatabaseAppConfig'
 ]
 
 MIDDLEWARE = [
@@ -82,4 +82,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'db.User'
+AUTH_USER_MODEL = 'database_app.User'
